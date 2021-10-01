@@ -26,8 +26,7 @@ var optionsHoroscopo = {
 };
 
 
-/** Tratar de insertar Users */
-/*
+/** Tratar de insertar Users 
 const json_users = fs.readFileSync('users.json')
 const database = JSON.parse(json_users);
 
