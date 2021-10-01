@@ -27,6 +27,7 @@ var optionsHoroscopo = {
 
 
 /** Tratar de insertar Users */
+/*
 const json_users = fs.readFileSync('users.json')
 const database = JSON.parse(json_users);
 
@@ -66,7 +67,7 @@ bot.command('users', ctx=>{
 });
 
 
-
+*/
 
 
 
@@ -74,7 +75,7 @@ bot.command('users', ctx=>{
 
 //***Mensaje de bienvenida***/
 bot.start((ctx) => {
-    ctx.telegram.sendMessage(ctx.chat.id, "Bienvenid@ -----> " + ctx.from.first_name + "\n\nAquí Puedes Consultar Los números de Florida Lottery\n\n\n✅  Lottery: Aquí Puedes ver el resumen de todos los juegos de Florida Lottery\n\n✅ Horóscopo: Acá puedes consultar cada signo del Zodiaco.\n\n\n✅  Suerte: Aquí se Generará los Números de la Suerte Para Tí \n\n✅  Ayuda: Muestra este Mensaje 😁\n\n✅  Donaciones: Ya tu sabes 😉\n\n\n Seleciona una Opción.........👇", {
+    ctx.telegram.sendMessage(ctx.chat.id, "Bienvenid@ -----> " + ctx.from.first_name + "\n\nAquí Puedes Consultar Los números de Florida Lottery\n\n\n\🕹 Lottery: Aquí Puedes ver el resumen de todos los juegos de Florida Lottery\n\n\🃏 Horoscopo: Acá puedes consultar cada signo del Zodiaco.\n\n\n\🍀  Suerte: Aquí se Generará los Números de la Suerte Para Tí \n\n\⁉ ️ Ayuda:  Muestra este Mensaje 😁\n\n🎁  Donaciones: Ya tu sabes 😉\n\n\n Seleciona una Opción.........👇", {
         reply_markup: {
             keyboard: [
                 [{ text: '\🕹 Lottery' },
@@ -101,7 +102,7 @@ bot.hears('\🎁Donaciones', ctx => {
 
 
 bot.hears('\⁉️Ayuda', ctx => {
-    ctx.telegram.sendMessage(ctx.chat.id, "Bienvenid@ ----->" + ctx.from.first_name + "\n\nAquí Puedes Consultar Los números de Florida Lottery\n\n\n✅  Lottery: Aquí Puedes ver el resumen de todos los juegos de Florida Lottery\n\n✅ Horóscopo: Acá puedes consultar cada signo del Zodiaco.\n\n\n✅  Suerte: Aquí se Generará los Números de la Suerte Para Tí \n\n✅  Ayuda: Muestra este Mensaje 😁\n\n✅  Donaciones: Ya tu sabes 😉\n\n\n Seleciona una Opción.......👇", {
+    ctx.telegram.sendMessage(ctx.chat.id, "Bienvenid@ -----> " + ctx.from.first_name + "\n\nAquí Puedes Consultar Los números de Florida Lottery\n\n\n\🕹 Lottery: Aquí Puedes ver el resumen de todos los juegos de Florida Lottery\n\n\🃏 Horoscopo: Acá puedes consultar cada signo del Zodiaco.\n\n\n\🍀  Suerte: Aquí se Generará los Números de la Suerte Para Tí \n\n\⁉ ️ Ayuda:  Muestra este Mensaje 😁\n\n🎁  Donaciones: Ya tu sabes 😉\n\n\n Seleciona una Opción.........👇", {
         reply_markup: {
             keyboard: [
                 [{ text: '\🕹 Lottery'},
