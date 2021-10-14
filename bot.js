@@ -5,6 +5,7 @@ const { Markup } = require('telegraf')
 var convert = require('xml-js')
 const axios = require('axios');
 const fs = require('fs');
+const path = require('path');
 
 
 
@@ -68,12 +69,39 @@ bot.command('users', ctx=>{
 
 */
 
+//crear base datos
+const db_name = path.join(__dirname, 'db', 'base.db' );
+const db = new sqlite3.Database(db_name, err=>{
+    if (err){
+        return console.log(err.message)
+    } else {
+        console.log('Conexion Exitosa con la base de datos')
+    }
+});
 
-
+//Crear la Tabla
+const sql_create = "CREATE TABLE IF NOT EXISTS users(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, userID INTEGER NOT NULL UNIQUE, username VARCHAR NOT NULL, first_name VARCHAR NOT NULL)";
+db.run(sql_create, err =>{
+    if (err){
+        return console.log(err.message)
+    } else {
+        console.log('Tabla Creada')
+    }
+})
 
 
 //***Mensaje de bienvenida***/
 bot.start((ctx) => {
+    const sql = "INSERT INTO users(userID, username, first_name) VALUES(?,?,?)";
+    const newUser = [ctx.from.id, ctx.from.username, ctx.from.first_name];
+    db.run(sql, newUser, err =>{
+        if (err){
+            // console.log(err)
+            console.log('Ya existe')
+        }else {
+            console.log('fue agregado')
+        }
+    });
     ctx.telegram.sendMessage(ctx.chat.id, "Bienvenid@ -----> " + ctx.from.first_name + "\n\nAquí Puedes Consultar Los números de Florida Lottery\n\n\n\🕹 Lottery: Aquí Puedes ver el resumen de todos los juegos de Florida Lottery\n\n\🃏 Horoscopo: Acá puedes consultar cada signo del Zodiaco.\n\n\n\🍀  Suerte: Aquí se Generará los Números de la Suerte Para Tí \n\n\⁉ ️ Ayuda:  Muestra este Mensaje 😁\n\n🎁  Donaciones: Ya tu sabes 😉\n\n\n Seleciona una Opción.........👇", {
         reply_markup: {
             keyboard: [
@@ -132,6 +160,16 @@ function numRandom(min, max) {
 
 /**Horoscopo */
 bot.hears('\🃏Horoscopo', ctx => {
+    const sql = "INSERT INTO users(userID, username, first_name) VALUES(?,?,?)";
+    const newUser = [ctx.from.id, ctx.from.username, ctx.from.first_name];
+    db.run(sql, newUser, err =>{
+        if (err){
+            // console.log(err)
+            console.log('Ya existe')
+        }else {
+            console.log('fue agregado')
+        }
+    });
     ctx.telegram.sendMessage(ctx.chat.id, "\n\nSelecione su Signo....👇", {
         reply_markup: {
             keyboard: [
@@ -510,6 +548,16 @@ bot.hears('CASH4LIFE', ctx => {
 
 
 bot.hears('Atras', ctx => {
+    const sql = "INSERT INTO users(userID, username, first_name) VALUES(?,?,?)";
+    const newUser = [ctx.from.id, ctx.from.username, ctx.from.first_name];
+    db.run(sql, newUser, err =>{
+        if (err){
+            // console.log(err)
+            console.log('Ya existe')
+        }else {
+            console.log('fue agregado')
+        }
+    });
     ctx.telegram.sendMessage(ctx.chat.id, "\n\nSeleciona una Opción: \n", {
         reply_markup: {
             keyboard: [
@@ -523,6 +571,34 @@ bot.hears('Atras', ctx => {
             resize_keyboard: true,
             one_time_keyboard: false
         }
+    })
+})
+
+/**Contar users */
+bot.command('members', ctx=>{
+
+    const sql = "SELECT * FROM users ORDER BY userID ";
+    db.all(sql, [], (err, rows)=>{
+        if(err){
+            console.log(err.message)
+        } else {
+            ctx.reply('Usuarios: '+ rows.length)
+        }
+    }) 
+})
+
+bot.command('username', ctx=>{
+    db.each("SELECT * FROM users ORDER BY username", function(err, row) {
+        ctx.reply('User : ' + row.username );
+    });
+    
+   
+})
+
+/**Enviar la baseDatos */
+bot.command('db', ctx=>{
+    bot.telegram.sendDocument(ctx.chat.id, {
+        source: 'db/base.db'
     })
 })
 
